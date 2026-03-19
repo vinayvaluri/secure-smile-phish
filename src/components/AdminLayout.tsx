@@ -31,7 +31,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         }`}
       >
         <div className="sidebar-logo">
-          <img src={logo} alt="Vishwa Samudra" className={`${collapsed ? "w-8" : "w-10"} h-auto`} />
+          <div className={`${collapsed ? "w-8 h-8" : "w-10 h-10"} rounded-lg bg-white flex items-center justify-center p-1 shadow-sm`}>
+            <img src={logo} alt="Vishwa Samudra" className="w-full h-auto object-contain" />
+          </div>
           {!collapsed && (
             <span className="text-sidebar-primary font-display font-bold text-sm leading-tight">
               Vishwa Samudra<br />

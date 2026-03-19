@@ -34,7 +34,9 @@ export default function SenderConfig() {
       <div className="bg-card border rounded-lg p-6 mb-6">
         <h3 className="font-display font-semibold mb-4 flex items-center gap-2"><Building2 className="w-5 h-5" />Company Branding</h3>
         <div className="flex items-center gap-4 bg-muted rounded-lg p-4">
-          <img src={logo} alt="Vishwa Samudra" className="w-16 h-auto" />
+          <div className="w-16 h-16 rounded-lg bg-white flex items-center justify-center p-2 shadow-sm">
+            <img src={logo} alt="Vishwa Samudra" className="w-full h-auto object-contain" />
+          </div>
           <div>
             <p className="font-display font-bold text-lg">{config.companyName}</p>
             <p className="text-sm text-muted-foreground">Challenge It. Change It.</p>
