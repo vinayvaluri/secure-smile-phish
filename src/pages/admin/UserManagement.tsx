@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Plus, Upload, Trash2, Mail, Key, Search, Download, Send } from "lucide-react";
+import { Plus, Upload, Trash2, Mail, Key, Search, Send, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 interface AppUser {
   id: string;
@@ -13,6 +14,7 @@ interface AppUser {
   email: string;
   department: string;
   group: string;
+  role: "admin" | "user";
   status: "active" | "invited" | "disabled";
   lastLogin: string;
   phishRate: number;
@@ -20,11 +22,11 @@ interface AppUser {
 }
 
 const defaultUsers: AppUser[] = [
-  { id: "1", name: "Rajesh Kumar", email: "rajesh@vishwasamudra.com", department: "Finance", group: "All Employees", status: "active", lastLogin: "2026-03-18", phishRate: 15, coursesCompleted: 3 },
-  { id: "2", name: "Priya Sharma", email: "priya@vishwasamudra.com", department: "HR", group: "All Employees", status: "active", lastLogin: "2026-03-17", phishRate: 8, coursesCompleted: 5 },
-  { id: "3", name: "Amit Patel", email: "amit@vishwasamudra.com", department: "IT", group: "High Risk", status: "active", lastLogin: "2026-03-16", phishRate: 32, coursesCompleted: 1 },
-  { id: "4", name: "Sneha Reddy", email: "sneha@vishwasamudra.com", department: "Marketing", group: "New Hires", status: "invited", lastLogin: "-", phishRate: 0, coursesCompleted: 0 },
-  { id: "5", name: "Vikram Singh", email: "vikram@vishwasamudra.com", department: "Operations", group: "C-Suite", status: "active", lastLogin: "2026-03-15", phishRate: 5, coursesCompleted: 4 },
+  { id: "1", name: "Rajesh Kumar", email: "rajesh@vishwasamudra.com", department: "Finance", group: "All Employees", role: "user", status: "active", lastLogin: "2026-03-18", phishRate: 15, coursesCompleted: 3 },
+  { id: "2", name: "Priya Sharma", email: "priya@vishwasamudra.com", department: "HR", group: "All Employees", role: "user", status: "active", lastLogin: "2026-03-17", phishRate: 8, coursesCompleted: 5 },
+  { id: "3", name: "Amit Patel", email: "amit@vishwasamudra.com", department: "IT", group: "High Risk", role: "admin", status: "active", lastLogin: "2026-03-16", phishRate: 32, coursesCompleted: 1 },
+  { id: "4", name: "Sneha Reddy", email: "sneha@vishwasamudra.com", department: "Marketing", group: "New Hires", role: "user", status: "invited", lastLogin: "-", phishRate: 0, coursesCompleted: 0 },
+  { id: "5", name: "Vikram Singh", email: "vikram@vishwasamudra.com", department: "Operations", group: "C-Suite", role: "admin", status: "active", lastLogin: "2026-03-15", phishRate: 5, coursesCompleted: 4 },
 ];
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
@@ -36,7 +38,7 @@ export default function UserManagement() {
   const [showBulkImport, setShowBulkImport] = useState(false);
   const [showBulkInvite, setShowBulkInvite] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState<AppUser | null>(null);
-  const [newUser, setNewUser] = useState({ name: "", email: "", department: "IT", group: "All Employees", password: "", sendInvite: false });
+  const [newUser, setNewUser] = useState({ name: "", email: "", department: "IT", group: "All Employees", role: "user" as "admin" | "user", password: "", sendInvite: false });
   const [bulkCsv, setBulkCsv] = useState("");
   const [bulkInviteEmails, setBulkInviteEmails] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -62,14 +64,15 @@ export default function UserManagement() {
     }
     const u: AppUser = {
       id: Date.now().toString(), name: newUser.name, email: newUser.email,
-      department: newUser.department, group: newUser.group,
+      department: newUser.department, group: newUser.group, role: newUser.role,
       status: newUser.sendInvite ? "invited" : "active",
       lastLogin: "-", phishRate: 0, coursesCompleted: 0,
     };
     setUsers([u, ...users]);
-    setNewUser({ name: "", email: "", department: "IT", group: "All Employees", password: "", sendInvite: false });
+    setNewUser({ name: "", email: "", department: "IT", group: "All Employees", role: "user", password: "", sendInvite: false });
     setPasswordError("");
     setShowCreate(false);
+    toast.success(`${newUser.role === "admin" ? "Admin" : "User"} created successfully!`);
   };
 
   const handleBulkImport = () => {
@@ -79,7 +82,7 @@ export default function UserManagement() {
       return {
         id: `bulk-${Date.now()}-${i}`, name: name || `User ${i + 1}`,
         email: email || "", department: department || "General", group: group || "All Employees",
-        status: "active" as const, lastLogin: "-", phishRate: 0, coursesCompleted: 0,
+        role: "user" as const, status: "active" as const, lastLogin: "-", phishRate: 0, coursesCompleted: 0,
       };
     });
     setUsers([...newUsers, ...users]);
@@ -92,7 +95,7 @@ export default function UserManagement() {
     const newUsers = emails.map((email, i) => ({
       id: `inv-${Date.now()}-${i}`, name: email.split("@")[0],
       email, department: "General", group: "All Employees",
-      status: "invited" as const, lastLogin: "-", phishRate: 0, coursesCompleted: 0,
+      role: "user" as const, status: "invited" as const, lastLogin: "-", phishRate: 0, coursesCompleted: 0,
     }));
     setUsers([...newUsers, ...users]);
     setBulkInviteEmails("");
@@ -105,12 +108,20 @@ export default function UserManagement() {
     setShowResetPassword(null);
     setNewPassword("");
     setPasswordError("");
+    toast.success("Password reset successfully!");
   };
 
   const handleDelete = (id: string) => setUsers(users.filter(u => u.id !== id));
 
   const handleInvite = (user: AppUser) => {
     setUsers(users.map(u => u.id === user.id ? { ...u, status: "invited" as const } : u));
+    toast.success(`Invite sent to ${user.email}`);
+  };
+
+  const handleToggleRole = (user: AppUser) => {
+    const newRole = user.role === "admin" ? "user" : "admin";
+    setUsers(users.map(u => u.id === user.id ? { ...u, role: newRole } : u));
+    toast.success(`${user.name} is now ${newRole === "admin" ? "an Admin" : "a User"}`);
   };
 
   return (
@@ -157,6 +168,16 @@ export default function UserManagement() {
                 <div><Label>Full Name</Label><Input value={newUser.name} onChange={e => setNewUser({ ...newUser, name: e.target.value })} /></div>
                 <div><Label>Email</Label><Input type="email" value={newUser.email} onChange={e => setNewUser({ ...newUser, email: e.target.value })} /></div>
                 <div>
+                  <Label>Role</Label>
+                  <Select value={newUser.role} onValueChange={v => setNewUser({ ...newUser, role: v as "admin" | "user" })}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="user">User</SelectItem>
+                      <SelectItem value="admin">Admin</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
                   <Label>Department</Label>
                   <Select value={newUser.department} onValueChange={v => setNewUser({ ...newUser, department: v })}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
@@ -194,7 +215,7 @@ export default function UserManagement() {
                   </div>
                 )}
                 <Button onClick={handleCreate} className="w-full bg-primary text-primary-foreground">
-                  {newUser.sendInvite ? "Create & Send Invite" : "Create User"}
+                  {newUser.sendInvite ? "Create & Send Invite" : `Create ${newUser.role === "admin" ? "Admin" : "User"}`}
                 </Button>
               </div>
             </DialogContent>
@@ -213,6 +234,7 @@ export default function UserManagement() {
             <tr>
               <th>Name</th>
               <th>Email</th>
+              <th>Role</th>
               <th>Department</th>
               <th>Group</th>
               <th>Status</th>
@@ -227,6 +249,11 @@ export default function UserManagement() {
               <tr key={u.id}>
                 <td className="font-medium">{u.name}</td>
                 <td className="text-muted-foreground">{u.email}</td>
+                <td>
+                  <span className={`badge-status ${u.role === "admin" ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>
+                    {u.role}
+                  </span>
+                </td>
                 <td>{u.department}</td>
                 <td>{u.group}</td>
                 <td>
@@ -241,6 +268,7 @@ export default function UserManagement() {
                 <td className="text-muted-foreground">{u.lastLogin}</td>
                 <td>
                   <div className="flex gap-1">
+                    <Button variant="ghost" size="sm" onClick={() => handleToggleRole(u)} title={u.role === "admin" ? "Demote to User" : "Promote to Admin"}><ShieldCheck className="w-4 h-4" /></Button>
                     <Button variant="ghost" size="sm" onClick={() => { setShowResetPassword(u); setNewPassword(""); setPasswordError(""); }} title="Reset Password"><Key className="w-4 h-4" /></Button>
                     {u.status !== "active" && <Button variant="ghost" size="sm" onClick={() => handleInvite(u)} title="Send Invite"><Mail className="w-4 h-4" /></Button>}
                     <Button variant="ghost" size="sm" onClick={() => handleDelete(u.id)} className="text-destructive" title="Delete"><Trash2 className="w-4 h-4" /></Button>
