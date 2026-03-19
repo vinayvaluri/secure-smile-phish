@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, Mail, FileText, Users, GraduationCap, Settings,
-  Send, Calendar, Shield, ChevronLeft, ChevronRight, LogOut, Bell, UserCircle, Layout
+  Send, Calendar, Shield, ChevronLeft, ChevronRight, LogOut, Bell, UserCircle, Layout, BarChart3
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 
