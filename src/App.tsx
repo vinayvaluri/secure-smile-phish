@@ -47,6 +47,7 @@ const App = () => (
           <Route path="/phished" element={<PhishedLanding />} />
           <Route path="/user/report" element={<UserReport />} />
           <Route path="/user/course/:courseId" element={<CourseViewer />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
