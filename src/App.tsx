@@ -44,6 +44,7 @@ const App = () => (
           <Route path="/admin/lms" element={<AdminPage><LMS /></AdminPage>} />
           <Route path="/admin/sso" element={<AdminPage><SSOConfig /></AdminPage>} />
           <Route path="/admin/landing" element={<AdminPage><LandingCustomization /></AdminPage>} />
+          <Route path="/admin/reports" element={<AdminPage><Reports /></AdminPage>} />
           <Route path="/admin/settings" element={<AdminPage><AdminSettings /></AdminPage>} />
 
           {/* User-facing Routes */}

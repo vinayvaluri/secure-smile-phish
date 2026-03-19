@@ -14,6 +14,7 @@ const navItems = [
   { icon: Users, label: "User Management", path: "/admin/users" },
   { icon: Layout, label: "Landing Page", path: "/admin/landing" },
   { icon: GraduationCap, label: "LMS", path: "/admin/lms" },
+  { icon: BarChart3, label: "Reports", path: "/admin/reports" },
   { icon: Shield, label: "SSO / Azure AD", path: "/admin/sso" },
   { icon: Settings, label: "Settings", path: "/admin/settings" },
 ];
