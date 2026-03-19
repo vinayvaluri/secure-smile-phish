@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, Mail, FileText, Users, GraduationCap, Settings,
-  Send, Calendar, Shield, ChevronLeft, ChevronRight, LogOut, Bell, UserCircle
+  Send, Calendar, Shield, ChevronLeft, ChevronRight, LogOut, Bell, UserCircle, Layout
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 
@@ -12,6 +12,7 @@ const navItems = [
   { icon: Calendar, label: "Campaigns", path: "/admin/campaigns" },
   { icon: Send, label: "Sender Config", path: "/admin/sender" },
   { icon: Users, label: "User Management", path: "/admin/users" },
+  { icon: Layout, label: "Landing Page", path: "/admin/landing" },
   { icon: GraduationCap, label: "LMS", path: "/admin/lms" },
   { icon: Shield, label: "SSO / Azure AD", path: "/admin/sso" },
   { icon: Settings, label: "Settings", path: "/admin/settings" },
