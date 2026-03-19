@@ -12,6 +12,7 @@ const navItems = [
   { icon: Calendar, label: "Campaigns", path: "/admin/campaigns" },
   { icon: Send, label: "Sender Config", path: "/admin/sender" },
   { icon: Users, label: "User Management", path: "/admin/users" },
+  { icon: Layout, label: "Landing Page", path: "/admin/landing" },
   { icon: GraduationCap, label: "LMS", path: "/admin/lms" },
   { icon: Shield, label: "SSO / Azure AD", path: "/admin/sso" },
   { icon: Settings, label: "Settings", path: "/admin/settings" },
