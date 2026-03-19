@@ -13,6 +13,7 @@ import LMS from "@/pages/admin/LMS";
 import SSOConfig from "@/pages/admin/SSOConfig";
 import AdminSettings from "@/pages/admin/AdminSettings";
 import LandingCustomization from "@/pages/admin/LandingCustomization";
+import Reports from "@/pages/admin/Reports";
 import PhishedLanding from "@/pages/user/PhishedLanding";
 import UserReport from "@/pages/user/UserReport";
 import CourseViewer from "@/pages/user/CourseViewer";
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/admin/lms" element={<AdminPage><LMS /></AdminPage>} />
           <Route path="/admin/sso" element={<AdminPage><SSOConfig /></AdminPage>} />
           <Route path="/admin/landing" element={<AdminPage><LandingCustomization /></AdminPage>} />
+          <Route path="/admin/reports" element={<AdminPage><Reports /></AdminPage>} />
           <Route path="/admin/settings" element={<AdminPage><AdminSettings /></AdminPage>} />
 
           {/* User-facing Routes */}
