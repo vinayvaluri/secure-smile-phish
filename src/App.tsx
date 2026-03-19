@@ -15,6 +15,7 @@ import AdminSettings from "@/pages/admin/AdminSettings";
 import PhishedLanding from "@/pages/user/PhishedLanding";
 import UserReport from "@/pages/user/UserReport";
 import CourseViewer from "@/pages/user/CourseViewer";
+import ResetPassword from "@/pages/user/ResetPassword";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
