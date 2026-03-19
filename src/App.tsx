@@ -13,6 +13,7 @@ import LMS from "@/pages/admin/LMS";
 import SSOConfig from "@/pages/admin/SSOConfig";
 import AdminSettings from "@/pages/admin/AdminSettings";
 import LandingCustomization from "@/pages/admin/LandingCustomization";
+import Reports from "@/pages/admin/Reports";
 import PhishedLanding from "@/pages/user/PhishedLanding";
 import UserReport from "@/pages/user/UserReport";
 import CourseViewer from "@/pages/user/CourseViewer";
