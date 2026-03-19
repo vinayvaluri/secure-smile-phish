@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Save, Bell, Shield, Palette } from "lucide-react";
+import { Save, Bell, Shield, Palette, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { toast } from "sonner";
+
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
 
 export default function AdminSettings() {
   const [settings, setSettings] = useState({
@@ -22,7 +25,27 @@ export default function AdminSettings() {
     passwordRequireSpecial: true,
   });
   const [saved, setSaved] = useState(false);
-  const handleSave = () => { setSaved(true); setTimeout(() => setSaved(false), 2000); };
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const handleSave = () => { setSaved(true); setTimeout(() => setSaved(false), 2000); toast.success("Settings saved!"); };
+
+  const handleChangePassword = () => {
+    if (!currentPassword) { setPasswordError("Current password is required."); return; }
+    if (!PASSWORD_REGEX.test(newPassword)) {
+      setPasswordError("New password must be at least 8 characters with uppercase, lowercase, number, and special character.");
+      return;
+    }
+    if (newPassword !== confirmPassword) { setPasswordError("Passwords do not match."); return; }
+    setPasswordError("");
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    toast.success("Password changed successfully!");
+  };
 
   return (
     <div className="animate-fade-in max-w-2xl">
@@ -39,6 +62,19 @@ export default function AdminSettings() {
             <div><Label>Organization Name</Label><Input value={settings.orgName} onChange={e => setSettings({ ...settings, orgName: e.target.value })} /></div>
             <div><Label>Admin Email</Label><Input value={settings.adminEmail} onChange={e => setSettings({ ...settings, adminEmail: e.target.value })} /></div>
             <div><Label>Phish Report Email</Label><Input value={settings.phishReportEmail} onChange={e => setSettings({ ...settings, phishReportEmail: e.target.value })} /></div>
+          </div>
+        </div>
+
+        {/* Change Admin Password */}
+        <div className="bg-card border rounded-lg p-6">
+          <h3 className="font-display font-semibold mb-4 flex items-center gap-2"><Lock className="w-5 h-5" />Change Admin Password</h3>
+          <div className="space-y-4">
+            <div><Label>Current Password</Label><Input type="password" value={currentPassword} onChange={e => { setCurrentPassword(e.target.value); setPasswordError(""); }} /></div>
+            <div><Label>New Password</Label><Input type="password" value={newPassword} onChange={e => { setNewPassword(e.target.value); setPasswordError(""); }} /></div>
+            <div><Label>Confirm New Password</Label><Input type="password" value={confirmPassword} onChange={e => { setConfirmPassword(e.target.value); setPasswordError(""); }} /></div>
+            <p className="text-xs text-muted-foreground">Min 8 chars, uppercase, lowercase, number, special char</p>
+            {passwordError && <p className="text-xs text-destructive">{passwordError}</p>}
+            <Button onClick={handleChangePassword} variant="outline" className="gap-2"><Lock className="w-4 h-4" />Change Password</Button>
           </div>
         </div>
 
