@@ -103,6 +103,9 @@ const overviewPie = [
   { name: "Safe (No Click)", value: 156 },
   { name: "Pending Training", value: 38 },
   { name: "Training Done", value: 112 },
+  { name: "Deleted Mail", value: 4 },
+  { name: "Opened No Click", value: 5 },
+  { name: "Never Opened", value: 4 },
 ];
 
 export default function Reports() {
