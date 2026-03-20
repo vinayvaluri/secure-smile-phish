@@ -1,7 +1,8 @@
 import { useState } from "react";
 import {
   FileText, Download, Filter, Users, ShieldAlert, GraduationCap,
-  Clock, MousePointerClick, CheckCircle, XCircle, TrendingUp, Eye
+  Clock, MousePointerClick, CheckCircle, XCircle, TrendingUp, Eye,
+  Trash2, MailOpen, MailX
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
