@@ -241,12 +241,6 @@ export default function Reports() {
           </div>
         </div>
       </div>
-          <div>
-            <div className="text-2xl font-display font-bold">156</div>
-            <div className="text-xs text-muted-foreground">Didn't Click</div>
-          </div>
-        </div>
-      </div>
 
       {/* Charts Row */}
       <div className="grid lg:grid-cols-3 gap-6 mb-6">
