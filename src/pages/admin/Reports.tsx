@@ -48,6 +48,28 @@ const noClickUsers = [
   { id: 5, name: "Bruce Wayne", email: "bruce.w@company.com", department: "Executive", campaignsSent: 12, lastCampaign: "2026-03-15", status: "Champion" },
 ];
 
+const deletedMailUsers = [
+  { id: 1, name: "Oliver Queen", email: "oliver.q@company.com", department: "Executive", campaign: "Q1 Finance Phish", deletedAt: "2026-03-15 08:10", openedBefore: false },
+  { id: 2, name: "Felicity Smoak", email: "felicity.s@company.com", department: "IT", campaign: "IT Support Scam", deletedAt: "2026-03-14 09:30", openedBefore: true },
+  { id: 3, name: "Barry Allen", email: "barry.a@company.com", department: "Engineering", campaign: "Password Reset Trap", deletedAt: "2026-03-13 11:15", openedBefore: false },
+  { id: 4, name: "Iris West", email: "iris.w@company.com", department: "Marketing", campaign: "CEO Impersonation", deletedAt: "2026-03-12 14:45", openedBefore: true },
+];
+
+const openedNoClickUsers = [
+  { id: 1, name: "Clark Kent", email: "clark.k@company.com", department: "Legal", campaign: "Q1 Finance Phish", openedAt: "2026-03-15 09:00", timesOpened: 3 },
+  { id: 2, name: "Lois Lane", email: "lois.l@company.com", department: "HR", campaign: "IT Support Scam", openedAt: "2026-03-14 10:20", timesOpened: 1 },
+  { id: 3, name: "Peter Parker", email: "peter.p@company.com", department: "Engineering", campaign: "Password Reset Trap", openedAt: "2026-03-13 08:55", timesOpened: 2 },
+  { id: 4, name: "MJ Watson", email: "mj.w@company.com", department: "Sales", campaign: "CEO Impersonation", openedAt: "2026-03-11 16:10", timesOpened: 1 },
+  { id: 5, name: "Gwen Stacy", email: "gwen.s@company.com", department: "Finance", campaign: "Q1 Finance Phish", openedAt: "2026-03-10 13:40", timesOpened: 4 },
+];
+
+const neverOpenedUsers = [
+  { id: 1, name: "Tony Stark", email: "tony.s@company.com", department: "Executive", campaignsSent: 5, lastCampaign: "2026-03-15" },
+  { id: 2, name: "Pepper Potts", email: "pepper.p@company.com", department: "Finance", campaignsSent: 3, lastCampaign: "2026-03-14" },
+  { id: 3, name: "Steve Rogers", email: "steve.r@company.com", department: "HR", campaignsSent: 7, lastCampaign: "2026-03-13" },
+  { id: 4, name: "Natasha Romanoff", email: "natasha.r@company.com", department: "IT", campaignsSent: 4, lastCampaign: "2026-03-12" },
+];
+
 const departmentRiskData = [
   { department: "Finance", phished: 12, safe: 28, risk: 30 },
   { department: "HR", phished: 5, safe: 15, risk: 25 },
