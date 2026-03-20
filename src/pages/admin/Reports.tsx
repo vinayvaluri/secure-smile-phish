@@ -312,10 +312,10 @@ export default function Reports() {
 
       {/* Tabs for detailed tables */}
       <Tabs defaultValue="phished" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="flex flex-wrap h-auto gap-1">
           <TabsTrigger value="phished" className="gap-1.5 text-xs sm:text-sm">
             <ShieldAlert className="w-3.5 h-3.5 hidden sm:block" />
-            Phished Users
+            Phished
           </TabsTrigger>
           <TabsTrigger value="completed" className="gap-1.5 text-xs sm:text-sm">
             <CheckCircle className="w-3.5 h-3.5 hidden sm:block" />
@@ -323,11 +323,23 @@ export default function Reports() {
           </TabsTrigger>
           <TabsTrigger value="pending" className="gap-1.5 text-xs sm:text-sm">
             <Clock className="w-3.5 h-3.5 hidden sm:block" />
-            Pending Training
+            Pending
           </TabsTrigger>
           <TabsTrigger value="noclicks" className="gap-1.5 text-xs sm:text-sm">
             <XCircle className="w-3.5 h-3.5 hidden sm:block" />
-            Didn't Click
+            No Click
+          </TabsTrigger>
+          <TabsTrigger value="deleted" className="gap-1.5 text-xs sm:text-sm">
+            <Trash2 className="w-3.5 h-3.5 hidden sm:block" />
+            Deleted
+          </TabsTrigger>
+          <TabsTrigger value="openednoclick" className="gap-1.5 text-xs sm:text-sm">
+            <MailOpen className="w-3.5 h-3.5 hidden sm:block" />
+            Opened
+          </TabsTrigger>
+          <TabsTrigger value="neveropened" className="gap-1.5 text-xs sm:text-sm">
+            <MailX className="w-3.5 h-3.5 hidden sm:block" />
+            Never Opened
           </TabsTrigger>
         </TabsList>
 
