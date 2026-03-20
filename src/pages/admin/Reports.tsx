@@ -1,7 +1,8 @@
 import { useState } from "react";
 import {
   FileText, Download, Filter, Users, ShieldAlert, GraduationCap,
-  Clock, MousePointerClick, CheckCircle, XCircle, TrendingUp, Eye
+  Clock, MousePointerClick, CheckCircle, XCircle, TrendingUp, Eye,
+  Trash2, MailOpen, MailX
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -47,6 +48,28 @@ const noClickUsers = [
   { id: 5, name: "Bruce Wayne", email: "bruce.w@company.com", department: "Executive", campaignsSent: 12, lastCampaign: "2026-03-15", status: "Champion" },
 ];
 
+const deletedMailUsers = [
+  { id: 1, name: "Oliver Queen", email: "oliver.q@company.com", department: "Executive", campaign: "Q1 Finance Phish", deletedAt: "2026-03-15 08:10", openedBefore: false },
+  { id: 2, name: "Felicity Smoak", email: "felicity.s@company.com", department: "IT", campaign: "IT Support Scam", deletedAt: "2026-03-14 09:30", openedBefore: true },
+  { id: 3, name: "Barry Allen", email: "barry.a@company.com", department: "Engineering", campaign: "Password Reset Trap", deletedAt: "2026-03-13 11:15", openedBefore: false },
+  { id: 4, name: "Iris West", email: "iris.w@company.com", department: "Marketing", campaign: "CEO Impersonation", deletedAt: "2026-03-12 14:45", openedBefore: true },
+];
+
+const openedNoClickUsers = [
+  { id: 1, name: "Clark Kent", email: "clark.k@company.com", department: "Legal", campaign: "Q1 Finance Phish", openedAt: "2026-03-15 09:00", timesOpened: 3 },
+  { id: 2, name: "Lois Lane", email: "lois.l@company.com", department: "HR", campaign: "IT Support Scam", openedAt: "2026-03-14 10:20", timesOpened: 1 },
+  { id: 3, name: "Peter Parker", email: "peter.p@company.com", department: "Engineering", campaign: "Password Reset Trap", openedAt: "2026-03-13 08:55", timesOpened: 2 },
+  { id: 4, name: "MJ Watson", email: "mj.w@company.com", department: "Sales", campaign: "CEO Impersonation", openedAt: "2026-03-11 16:10", timesOpened: 1 },
+  { id: 5, name: "Gwen Stacy", email: "gwen.s@company.com", department: "Finance", campaign: "Q1 Finance Phish", openedAt: "2026-03-10 13:40", timesOpened: 4 },
+];
+
+const neverOpenedUsers = [
+  { id: 1, name: "Tony Stark", email: "tony.s@company.com", department: "Executive", campaignsSent: 5, lastCampaign: "2026-03-15" },
+  { id: 2, name: "Pepper Potts", email: "pepper.p@company.com", department: "Finance", campaignsSent: 3, lastCampaign: "2026-03-14" },
+  { id: 3, name: "Steve Rogers", email: "steve.r@company.com", department: "HR", campaignsSent: 7, lastCampaign: "2026-03-13" },
+  { id: 4, name: "Natasha Romanoff", email: "natasha.r@company.com", department: "IT", campaignsSent: 4, lastCampaign: "2026-03-12" },
+];
+
 const departmentRiskData = [
   { department: "Finance", phished: 12, safe: 28, risk: 30 },
   { department: "HR", phished: 5, safe: 15, risk: 25 },
@@ -70,6 +93,9 @@ const pieColors = [
   "hsl(142, 71%, 45%)",
   "hsl(43, 72%, 50%)",
   "hsl(220, 60%, 22%)",
+  "hsl(280, 60%, 50%)",
+  "hsl(200, 70%, 50%)",
+  "hsl(340, 60%, 45%)",
 ];
 
 const overviewPie = [
@@ -77,6 +103,9 @@ const overviewPie = [
   { name: "Safe (No Click)", value: 156 },
   { name: "Pending Training", value: 38 },
   { name: "Training Done", value: 112 },
+  { name: "Deleted Mail", value: 4 },
+  { name: "Opened No Click", value: 5 },
+  { name: "Never Opened", value: 4 },
 ];
 
 export default function Reports() {
@@ -147,14 +176,14 @@ export default function Reports() {
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mb-6">
         <div className="stat-card flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center">
             <ShieldAlert className="w-5 h-5 text-destructive" />
           </div>
           <div>
             <div className="text-2xl font-display font-bold">42</div>
-            <div className="text-xs text-muted-foreground">Users Phished</div>
+            <div className="text-xs text-muted-foreground">Phished</div>
           </div>
         </div>
         <div className="stat-card flex items-center gap-3">
@@ -163,7 +192,7 @@ export default function Reports() {
           </div>
           <div>
             <div className="text-2xl font-display font-bold">112</div>
-            <div className="text-xs text-muted-foreground">Training Completed</div>
+            <div className="text-xs text-muted-foreground">Training Done</div>
           </div>
         </div>
         <div className="stat-card flex items-center gap-3">
@@ -172,7 +201,7 @@ export default function Reports() {
           </div>
           <div>
             <div className="text-2xl font-display font-bold">38</div>
-            <div className="text-xs text-muted-foreground">Pending Training</div>
+            <div className="text-xs text-muted-foreground">Pending</div>
           </div>
         </div>
         <div className="stat-card flex items-center gap-3">
@@ -181,7 +210,34 @@ export default function Reports() {
           </div>
           <div>
             <div className="text-2xl font-display font-bold">156</div>
-            <div className="text-xs text-muted-foreground">Didn't Click</div>
+            <div className="text-xs text-muted-foreground">No Click</div>
+          </div>
+        </div>
+        <div className="stat-card flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-accent/50 flex items-center justify-center">
+            <Trash2 className="w-5 h-5 text-accent-foreground" />
+          </div>
+          <div>
+            <div className="text-2xl font-display font-bold">4</div>
+            <div className="text-xs text-muted-foreground">Deleted</div>
+          </div>
+        </div>
+        <div className="stat-card flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center">
+            <MailOpen className="w-5 h-5 text-secondary-foreground" />
+          </div>
+          <div>
+            <div className="text-2xl font-display font-bold">5</div>
+            <div className="text-xs text-muted-foreground">Opened</div>
+          </div>
+        </div>
+        <div className="stat-card flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+            <MailX className="w-5 h-5 text-muted-foreground" />
+          </div>
+          <div>
+            <div className="text-2xl font-display font-bold">4</div>
+            <div className="text-xs text-muted-foreground">Never Opened</div>
           </div>
         </div>
       </div>
@@ -250,10 +306,10 @@ export default function Reports() {
 
       {/* Tabs for detailed tables */}
       <Tabs defaultValue="phished" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="flex flex-wrap h-auto gap-1">
           <TabsTrigger value="phished" className="gap-1.5 text-xs sm:text-sm">
             <ShieldAlert className="w-3.5 h-3.5 hidden sm:block" />
-            Phished Users
+            Phished
           </TabsTrigger>
           <TabsTrigger value="completed" className="gap-1.5 text-xs sm:text-sm">
             <CheckCircle className="w-3.5 h-3.5 hidden sm:block" />
@@ -261,11 +317,23 @@ export default function Reports() {
           </TabsTrigger>
           <TabsTrigger value="pending" className="gap-1.5 text-xs sm:text-sm">
             <Clock className="w-3.5 h-3.5 hidden sm:block" />
-            Pending Training
+            Pending
           </TabsTrigger>
           <TabsTrigger value="noclicks" className="gap-1.5 text-xs sm:text-sm">
             <XCircle className="w-3.5 h-3.5 hidden sm:block" />
-            Didn't Click
+            No Click
+          </TabsTrigger>
+          <TabsTrigger value="deleted" className="gap-1.5 text-xs sm:text-sm">
+            <Trash2 className="w-3.5 h-3.5 hidden sm:block" />
+            Deleted
+          </TabsTrigger>
+          <TabsTrigger value="openednoclick" className="gap-1.5 text-xs sm:text-sm">
+            <MailOpen className="w-3.5 h-3.5 hidden sm:block" />
+            Opened
+          </TabsTrigger>
+          <TabsTrigger value="neveropened" className="gap-1.5 text-xs sm:text-sm">
+            <MailX className="w-3.5 h-3.5 hidden sm:block" />
+            Never Opened
           </TabsTrigger>
         </TabsList>
 
@@ -457,6 +525,132 @@ export default function Reports() {
                           {u.status === "Champion" ? "🏆 " : "✅ "}{u.status}
                         </Badge>
                       </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Deleted Mail */}
+        <TabsContent value="deleted">
+          <div className="bg-card rounded-lg border">
+            <div className="px-6 py-4 border-b flex items-center justify-between">
+              <h3 className="font-display font-semibold text-sm">Users Who Deleted Mail</h3>
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <Download className="w-3.5 h-3.5" />
+                Export CSV
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Department</th>
+                    <th>Campaign</th>
+                    <th>Deleted At</th>
+                    <th>Opened Before Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filterBySearch(deletedMailUsers).map((u) => (
+                    <tr key={u.id}>
+                      <td>
+                        <div className="font-medium">{u.name}</div>
+                        <div className="text-xs text-muted-foreground">{u.email}</div>
+                      </td>
+                      <td>{u.department}</td>
+                      <td>{u.campaign}</td>
+                      <td className="text-muted-foreground text-xs">{u.deletedAt}</td>
+                      <td>
+                        {u.openedBefore ? (
+                          <Badge variant="secondary" className="text-xs">Yes</Badge>
+                        ) : (
+                          <Badge variant="outline" className="text-xs">No</Badge>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Opened But Didn't Click */}
+        <TabsContent value="openednoclick">
+          <div className="bg-card rounded-lg border">
+            <div className="px-6 py-4 border-b flex items-center justify-between">
+              <h3 className="font-display font-semibold text-sm">Opened Mail But Didn't Click or Respond</h3>
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <Download className="w-3.5 h-3.5" />
+                Export CSV
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Department</th>
+                    <th>Campaign</th>
+                    <th>Opened At</th>
+                    <th>Times Opened</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filterBySearch(openedNoClickUsers).map((u) => (
+                    <tr key={u.id}>
+                      <td>
+                        <div className="font-medium">{u.name}</div>
+                        <div className="text-xs text-muted-foreground">{u.email}</div>
+                      </td>
+                      <td>{u.department}</td>
+                      <td>{u.campaign}</td>
+                      <td className="text-muted-foreground text-xs">{u.openedAt}</td>
+                      <td className="text-center">
+                        <Badge variant="secondary" className="text-xs">{u.timesOpened}×</Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Never Opened */}
+        <TabsContent value="neveropened">
+          <div className="bg-card rounded-lg border">
+            <div className="px-6 py-4 border-b flex items-center justify-between">
+              <h3 className="font-display font-semibold text-sm">Users Who Never Opened Mail</h3>
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <Download className="w-3.5 h-3.5" />
+                Export CSV
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Department</th>
+                    <th>Campaigns Sent</th>
+                    <th>Last Campaign</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filterBySearch(neverOpenedUsers).map((u) => (
+                    <tr key={u.id}>
+                      <td>
+                        <div className="font-medium">{u.name}</div>
+                        <div className="text-xs text-muted-foreground">{u.email}</div>
+                      </td>
+                      <td>{u.department}</td>
+                      <td className="text-center">{u.campaignsSent}</td>
+                      <td className="text-muted-foreground">{u.lastCampaign}</td>
                     </tr>
                   ))}
                 </tbody>
