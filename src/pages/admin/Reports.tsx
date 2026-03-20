@@ -538,6 +538,132 @@ export default function Reports() {
             </div>
           </div>
         </TabsContent>
+
+        {/* Deleted Mail */}
+        <TabsContent value="deleted">
+          <div className="bg-card rounded-lg border">
+            <div className="px-6 py-4 border-b flex items-center justify-between">
+              <h3 className="font-display font-semibold text-sm">Users Who Deleted Mail</h3>
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <Download className="w-3.5 h-3.5" />
+                Export CSV
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Department</th>
+                    <th>Campaign</th>
+                    <th>Deleted At</th>
+                    <th>Opened Before Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filterBySearch(deletedMailUsers).map((u) => (
+                    <tr key={u.id}>
+                      <td>
+                        <div className="font-medium">{u.name}</div>
+                        <div className="text-xs text-muted-foreground">{u.email}</div>
+                      </td>
+                      <td>{u.department}</td>
+                      <td>{u.campaign}</td>
+                      <td className="text-muted-foreground text-xs">{u.deletedAt}</td>
+                      <td>
+                        {u.openedBefore ? (
+                          <Badge variant="secondary" className="text-xs">Yes</Badge>
+                        ) : (
+                          <Badge variant="outline" className="text-xs">No</Badge>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Opened But Didn't Click */}
+        <TabsContent value="openednoclick">
+          <div className="bg-card rounded-lg border">
+            <div className="px-6 py-4 border-b flex items-center justify-between">
+              <h3 className="font-display font-semibold text-sm">Opened Mail But Didn't Click or Respond</h3>
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <Download className="w-3.5 h-3.5" />
+                Export CSV
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Department</th>
+                    <th>Campaign</th>
+                    <th>Opened At</th>
+                    <th>Times Opened</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filterBySearch(openedNoClickUsers).map((u) => (
+                    <tr key={u.id}>
+                      <td>
+                        <div className="font-medium">{u.name}</div>
+                        <div className="text-xs text-muted-foreground">{u.email}</div>
+                      </td>
+                      <td>{u.department}</td>
+                      <td>{u.campaign}</td>
+                      <td className="text-muted-foreground text-xs">{u.openedAt}</td>
+                      <td className="text-center">
+                        <Badge variant="secondary" className="text-xs">{u.timesOpened}×</Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Never Opened */}
+        <TabsContent value="neveropened">
+          <div className="bg-card rounded-lg border">
+            <div className="px-6 py-4 border-b flex items-center justify-between">
+              <h3 className="font-display font-semibold text-sm">Users Who Never Opened Mail</h3>
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <Download className="w-3.5 h-3.5" />
+                Export CSV
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Department</th>
+                    <th>Campaigns Sent</th>
+                    <th>Last Campaign</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filterBySearch(neverOpenedUsers).map((u) => (
+                    <tr key={u.id}>
+                      <td>
+                        <div className="font-medium">{u.name}</div>
+                        <div className="text-xs text-muted-foreground">{u.email}</div>
+                      </td>
+                      <td>{u.department}</td>
+                      <td className="text-center">{u.campaignsSent}</td>
+                      <td className="text-muted-foreground">{u.lastCampaign}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );
