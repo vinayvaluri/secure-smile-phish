@@ -176,14 +176,14 @@ export default function Reports() {
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mb-6">
         <div className="stat-card flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center">
             <ShieldAlert className="w-5 h-5 text-destructive" />
           </div>
           <div>
             <div className="text-2xl font-display font-bold">42</div>
-            <div className="text-xs text-muted-foreground">Users Phished</div>
+            <div className="text-xs text-muted-foreground">Phished</div>
           </div>
         </div>
         <div className="stat-card flex items-center gap-3">
@@ -192,7 +192,7 @@ export default function Reports() {
           </div>
           <div>
             <div className="text-2xl font-display font-bold">112</div>
-            <div className="text-xs text-muted-foreground">Training Completed</div>
+            <div className="text-xs text-muted-foreground">Training Done</div>
           </div>
         </div>
         <div className="stat-card flex items-center gap-3">
@@ -201,13 +201,46 @@ export default function Reports() {
           </div>
           <div>
             <div className="text-2xl font-display font-bold">38</div>
-            <div className="text-xs text-muted-foreground">Pending Training</div>
+            <div className="text-xs text-muted-foreground">Pending</div>
           </div>
         </div>
         <div className="stat-card flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
             <MousePointerClick className="w-5 h-5 text-primary" />
           </div>
+          <div>
+            <div className="text-2xl font-display font-bold">156</div>
+            <div className="text-xs text-muted-foreground">No Click</div>
+          </div>
+        </div>
+        <div className="stat-card flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-accent/50 flex items-center justify-center">
+            <Trash2 className="w-5 h-5 text-accent-foreground" />
+          </div>
+          <div>
+            <div className="text-2xl font-display font-bold">4</div>
+            <div className="text-xs text-muted-foreground">Deleted</div>
+          </div>
+        </div>
+        <div className="stat-card flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center">
+            <MailOpen className="w-5 h-5 text-secondary-foreground" />
+          </div>
+          <div>
+            <div className="text-2xl font-display font-bold">5</div>
+            <div className="text-xs text-muted-foreground">Opened</div>
+          </div>
+        </div>
+        <div className="stat-card flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+            <MailX className="w-5 h-5 text-muted-foreground" />
+          </div>
+          <div>
+            <div className="text-2xl font-display font-bold">4</div>
+            <div className="text-xs text-muted-foreground">Never Opened</div>
+          </div>
+        </div>
+      </div>
           <div>
             <div className="text-2xl font-display font-bold">156</div>
             <div className="text-xs text-muted-foreground">Didn't Click</div>
